@@ -5,7 +5,7 @@ DAODISEO Sandbox Blockchain Environment
 ## Achilles app-chain binaries installation (achillesd)
 
 ```
-go: go version go1.22.9 linux/amd64
+go: go version go1.23.6 linux/amd64
 name: achilles
 ```
 
@@ -15,9 +15,9 @@ name: achilles
 
 ```
 sudo rm -rvf /usr/local/go/
-wget https://golang.org/dl/go1.22.4.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.22.4.linux-amd64.tar.gz
-rm go1.22.4.linux-amd64.tar.gz
+wget https://golang.org/dl/go1.23.6.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.23.6.linux-amd64.tar.gz
+rm go1.23.6.linux-amd64.tar.gz
 ```
 
 ### Put PATH to ~/.profile
