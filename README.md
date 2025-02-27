@@ -5,7 +5,7 @@ DAODISEO Sandbox Blockchain Environment
 ## Achilles app-chain binaries installation (achillesd)
 
 ```
-go: go version go1.23.6 linux/amd64
+go: go version go1.22.4 linux/amd64
 name: achilles
 ```
 
