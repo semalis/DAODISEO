@@ -55,13 +55,13 @@ sudo apt install mc htop screen git gcc make
 ### Clone source from repo
 
 ```
-git clone https://github.com/daodiseomoney/SANDBOX.git
+git clone https://github.com/daodiseomoney/Achilles.git
 ```
 
 ### Open source directory
 
 ```
-cd SANDBOX/achilles
+cd Achilles/achilles
 ```
 
 ### Build binary
