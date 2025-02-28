@@ -1,7 +1,7 @@
 {
   "app_name": "\u003cappd\u003e",
   "app_version": "",
-  "genesis_time": "2025-02-28T16:12:02.764511682Z",
+  "genesis_time": "2025-02-28T17:13:02.764511682Z",
   "chain_id": "test-core-1",
   "initial_height": 1,
   "app_hash": null,
@@ -276,7 +276,7 @@
     "consensus": null,
     "crisis": {
       "constant_fee": {
-        "denom": "stake",
+        "denom": "uodis",
         "amount": "1000"
       }
     },
@@ -568,10 +568,10 @@
               {
                 "@type": "/cosmos.staking.v1beta1.MsgCreateValidator",
                 "description": {
-                  "moniker": "StakerHouse",
+                  "moniker": "uodisrHouse",
                   "identity": "60D9300FE1415E4A",
-                  "website": "https://stakerhouse.com",
-                  "security_contact": "support@stakerhouse.com",
+                  "website": "https://uodisrhouse.com",
+                  "security_contact": "support@uodisrhouse.com",
                   "details": "State-of-the-art infrastructure for multiple PoS blockchain protocols, offering highly reliable and secure staking services."
                 },
                 "commission": {
@@ -1195,7 +1195,7 @@
       "params": {
         "min_deposit": [
           {
-            "denom": "stake",
+            "denom": "uodis",
             "amount": "10000000"
           }
         ],
@@ -1211,7 +1211,7 @@
         "expedited_threshold": "0.667000000000000000",
         "expedited_min_deposit": [
           {
-            "denom": "stake",
+            "denom": "uodis",
             "amount": "50000000"
           }
         ],
@@ -1238,9 +1238,7 @@
         "clients_consensus": [],
         "clients_metadata": [],
         "params": {
-          "allowed_clients": [
-            "*"
-          ]
+          "allowed_clients": ["*"]
         },
         "create_localhost": false,
         "next_client_sequence": "0"
@@ -1288,9 +1286,7 @@
         "port": "icahost",
         "params": {
           "host_enabled": true,
-          "allow_messages": [
-            "*"
-          ]
+          "allow_messages": ["*"]
         }
       }
     },
@@ -1300,7 +1296,7 @@
         "annual_provisions": "0.000000000000000000"
       },
       "params": {
-        "mint_denom": "stake",
+        "mint_denom": "uodis",
         "inflation_rate_change": "0.130000000000000000",
         "inflation_max": "0.200000000000000000",
         "inflation_min": "0.070000000000000000",
@@ -1331,7 +1327,7 @@
         "max_validators": 100,
         "max_entries": 7,
         "historical_entries": 10000,
-        "bond_denom": "stake",
+        "bond_denom": "uodis",
         "min_commission_rate": "0.000000000000000000"
       },
       "last_total_power": "0",
@@ -1366,9 +1362,7 @@
         "max_bytes": "1048576"
       },
       "validator": {
-        "pub_key_types": [
-          "ed25519"
-        ]
+        "pub_key_types": ["ed25519"]
       },
       "version": {
         "app": "0"
