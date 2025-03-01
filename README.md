@@ -81,7 +81,7 @@ achillesd init "<moniker-name>" --chain-id test-core-1
 ### Set minimum-gas-prices = "" in app.toml to minimum-gas-prices = "0.25uodis"
 
 ```
-nano ~/.achilles/config/app.toml
+sed -i -e "s|^minimum-gas-prices *=.*|minimum-gas-prices = \"0.25uodis\"|" $HOME/.achilles/config/app.toml
 ```
 
 ### Generate keys
