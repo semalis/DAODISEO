@@ -128,7 +128,7 @@ achillesd genesis add-genesis-account <key-name> 1000000uodis
 
 achillesd genesis gentx <key-name> 1000000uodis \
   --pubkey=$(achillesd tendermint show-validator) \
-  --chain-id=test-core-1 \
+  --chain-id=ithaca-1 \
   --moniker="my-moniker" \
   --commission-rate="0.10" \
   --commission-max-rate="0.20" \
