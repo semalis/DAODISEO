@@ -75,7 +75,7 @@ make install
 ### Init
 
 ```bash:
-achillesd init "<moniker-name>" --chain-id test-core-1
+achillesd init "<moniker-name>" --chain-id ithaca-1
 ```
 
 ### Set minimum-gas-prices = "" in app.toml to minimum-gas-prices = "0.25uodis"
