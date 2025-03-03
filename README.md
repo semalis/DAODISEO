@@ -159,7 +159,7 @@ achillesd start
 
 Set up a service to allow binary to run in the background as well as restart automatically if it runs into any problems:
 ```
-sudo tee /etc/systemd/system/sachilles.service > /dev/null << EOF
+sudo tee /etc/systemd/system/achilles.service > /dev/null << EOF
 [Unit]
 Description=Achilles app chain daemon
 After=network-online.target
