@@ -190,6 +190,10 @@ sudo systemctl restart achilles
 
 How you can check the logs
 ```
-sudo journalctl -u achilles -f
+sudo journalctl -u achilles -f --output cat
 ```
 
+How you can check blocks sync
+```
+curl http://localhost:26657/status | jq -r ".result.sync_info"
+```
