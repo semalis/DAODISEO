@@ -171,7 +171,7 @@ Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
 Environment="DAEMON_LOG_BUFFER_SIZE=512"
 Environment="UNSAFE_SKIP_BACKUP=true"
 User=$USER
-ExecStart=${HOME}/go/bin/achilles start
+ExecStart=${HOME}/go/bin/achillesd start
 Restart=always
 RestartSec=3
 LimitNOFILE=infinity
