@@ -54,11 +54,8 @@ import (
 	"google.golang.org/protobuf/types/known/durationpb"
 
 	achillesmodulev1 "github.com/olimdzhon/achilles/api/achilles/achilles/module"
-	cosmwasmmodulev1 "github.com/olimdzhon/achilles/api/achilles/cosmwasm/module"
 	_ "github.com/olimdzhon/achilles/x/achilles/module" // import for side-effects
 	achillesmoduletypes "github.com/olimdzhon/achilles/x/achilles/types"
-	_ "github.com/olimdzhon/achilles/x/cosmwasm/module" // import for side-effects
-	cosmwasmmoduletypes "github.com/olimdzhon/achilles/x/cosmwasm/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
@@ -97,7 +94,6 @@ var (
 		circuittypes.ModuleName,
 		// chain modules
 		achillesmoduletypes.ModuleName,
-		cosmwasmmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 
@@ -123,7 +119,6 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		achillesmoduletypes.ModuleName,
-		cosmwasmmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	}
 
@@ -143,7 +138,6 @@ var (
 		ibcfeetypes.ModuleName,
 		// chain modules
 		achillesmoduletypes.ModuleName,
-		cosmwasmmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	}
 
@@ -302,10 +296,6 @@ var (
 			{
 				Name:   achillesmoduletypes.ModuleName,
 				Config: appconfig.WrapAny(&achillesmodulev1.Module{}),
-			},
-			{
-				Name:   cosmwasmmoduletypes.ModuleName,
-				Config: appconfig.WrapAny(&cosmwasmmodulev1.Module{}),
 			},
 			// this line is used by starport scaffolding # stargate/app/moduleConfig
 		},
