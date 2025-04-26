@@ -45,9 +45,9 @@ go version
 ### Install packages
 
 ```
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt install mc htop screen git gcc make
+sudo apt update
+sudo apt upgrade
+sudo apt install mc btop nano screen git make build-essential
 ```
 
 ## Binary building
