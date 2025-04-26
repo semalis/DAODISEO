@@ -1,0 +1,13 @@
+syntax = "proto3";
+package achilles.cosmwasm;
+
+option go_package = "github.com/olimdzhon/achilles/x/cosmwasm/types";
+
+message CosmwasmPacketData {
+    oneof packet {
+        NoData noData = 1;
+    }
+}
+
+message NoData {
+}

@@ -76,6 +76,8 @@ import (
 	ibckeeper "github.com/cosmos/ibc-go/v8/modules/core/keeper"
 
 	achillesmodulekeeper "github.com/olimdzhon/achilles/x/achilles/keeper"
+	cosmwasmmodulekeeper "github.com/olimdzhon/achilles/x/cosmwasm/keeper"
+
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"github.com/olimdzhon/achilles/docs"
@@ -142,6 +144,7 @@ type App struct {
 	ScopedKeepers             map[string]capabilitykeeper.ScopedKeeper
 
 	AchillesKeeper achillesmodulekeeper.Keeper
+	CosmwasmKeeper cosmwasmmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// simulation manager
@@ -245,6 +248,7 @@ func New(
 		&app.GroupKeeper,
 		&app.CircuitBreakerKeeper,
 		&app.AchillesKeeper,
+		&app.CosmwasmKeeper,
 		// this line is used by starport scaffolding # stargate/app/keeperDefinition
 	); err != nil {
 		panic(err)
