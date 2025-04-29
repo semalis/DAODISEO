@@ -45,9 +45,9 @@ go version
 ### Install packages
 
 ```
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt install mc htop screen git gcc make
+sudo apt update
+sudo apt upgrade
+sudo apt install mc btop nano screen git make build-essential
 ```
 
 ## Binary building
@@ -153,4 +153,47 @@ achillesd genesis collect-gentxs
 
 ```
 achillesd start
+```
+
+### ****Set Up achilles Service****
+
+Set up a service to allow binary to run in the background as well as restart automatically if it runs into any problems:
+```
+sudo tee /etc/systemd/system/achilles.service > /dev/null << EOF
+[Unit]
+Description=Achilles app chain daemon
+After=network-online.target
+[Service]
+Environment="DAEMON_NAME=achillesd"
+Environment="DAEMON_HOME=${HOME}/.achilles"
+Environment="DAEMON_RESTART_AFTER_UPGRADE=true"
+Environment="DAEMON_ALLOW_DOWNLOAD_BINARIES=false"
+Environment="DAEMON_LOG_BUFFER_SIZE=512"
+Environment="UNSAFE_SKIP_BACKUP=true"
+User=$USER
+ExecStart=${HOME}/go/bin/achillesd start
+Restart=always
+RestartSec=3
+LimitNOFILE=infinity
+LimitNPROC=infinity
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+And start service:
+```
+sudo systemctl daemon-reload
+sudo systemctl enable achilles 
+sudo systemctl restart achilles
+```
+
+How you can check the logs
+```
+sudo journalctl -u achilles -f --output cat
+```
+
+How you can check blocks sync
+```
+curl http://localhost:26657/status | jq -r ".result.sync_info"
 ```
