@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"io"
 
 	v110 "github.com/olimdzhon/achilles/app/upgrades/v110"
@@ -315,8 +316,11 @@ func New(
 func (app *App) setupUpgradeHandlers(cfg module.Configurator) {
 	app.UpgradeKeeper.SetUpgradeHandler(
 		v110.UpgradeName,
-		v110.CreateUpgradeHandler(cfg, app.sm),
-	)
+		func(ctx context.Context, plan upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
+			
+			return app.ModuleManager.RunMigrations(ctx, cfg, fromVM)
+		},
+	)	
 
 	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
 	if err != nil {
