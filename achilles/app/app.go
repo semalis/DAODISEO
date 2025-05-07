@@ -3,6 +3,8 @@ package app
 import (
 	"io"
 
+	v110 "github.com/olimdzhon/achilles/app/upgrades/v110"
+
 	_ "cosmossdk.io/api/cosmos/tx/config/v1" // import for side-effects
 	clienthelpers "cosmossdk.io/client/v2/helpers"
 	"cosmossdk.io/depinject"
@@ -296,6 +298,11 @@ func New(
 		return app.App.InitChainer(ctx, req)
 	})
 
+	cfg := module.NewConfigurator(app.appCodec, app.MsgServiceRouter(), app.GRPCQueryRouter())
+	// app.ModuleManager.RegisterServices(cfg)
+
+	app.setupUpgradeHandlers(cfg)
+
 	if err := app.Load(loadLatest); err != nil {
 		return nil, err
 	}
@@ -303,6 +310,14 @@ func New(
 	return app, app.WasmKeeper.InitializePinnedCodes(app.NewUncachedContext(true, tmproto.Header{}))
 
 }
+
+func (app *App) setupUpgradeHandlers(cfg module.Configurator) {
+	app.UpgradeKeeper.SetUpgradeHandler(
+		v110.UpgradeName,
+		v110.CreateUpgradeHandler(cfg, app.sm),
+	)
+}
+
 
 // LegacyAmino returns App's amino codec.
 //
