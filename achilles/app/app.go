@@ -4,7 +4,7 @@ import (
 	"context"
 	"io"
 
-	v110 "github.com/olimdzhon/achilles/app/upgrades/v110"
+	v100 "github.com/olimdzhon/achilles/app/upgrades/v100"
 
 	_ "cosmossdk.io/api/cosmos/tx/config/v1" // import for side-effects
 	clienthelpers "cosmossdk.io/client/v2/helpers"
@@ -314,7 +314,7 @@ func New(
 
 func (app *App) setupUpgradeHandlers(cfg module.Configurator) {
 	app.UpgradeKeeper.SetUpgradeHandler(
-		v110.UpgradeName,
+		v100.UpgradeName,
 		func(ctx context.Context, plan upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
 			
 			return app.ModuleManager.RunMigrations(ctx, cfg, fromVM)
@@ -330,7 +330,7 @@ func (app *App) setupUpgradeHandlers(cfg module.Configurator) {
 		return
 	}
 
-	if upgradeInfo.Name == v110.UpgradeName {
+	if upgradeInfo.Name == v100.UpgradeName {
 		storeUpgrades := storetypes.StoreUpgrades{
 			Added: []string{"wasm"},
 		}
