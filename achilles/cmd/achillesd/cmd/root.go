@@ -20,7 +20,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 
-	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/olimdzhon/achilles/app"
 )
 
@@ -98,7 +97,6 @@ func NewRootCmd() *cobra.Command {
 	if err := autoCliOpts.EnhanceRootCommand(rootCmd); err != nil {
 		panic(err)
 	}
-	rootCmd.AddCommand(version.NewVersionCommand())
 
 	return rootCmd
 }
