@@ -3,16 +3,12 @@
 BUILDDIR ?= $(CURDIR)/build
 LEDGER_ENABLED ?= true
 
-BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+VERSION := $(shell echo $(shell git describe --tags 2>/dev/null ) | sed 's/^v//')
 COMMIT := $(shell git log -1 --format='%H')
 
 ifeq (,$(VERSION))
   VERSION := $(shell git describe --exact-match 2>/dev/null)
   # if VERSION is empty, then populate it with branch's name and raw commit hash
-  ifeq (,$(VERSION))
-    VERSION := $(BRANCH)
-  endif
-
   ifeq (main,$(VERSION))
     VERSION := v1.0.0
   endif
