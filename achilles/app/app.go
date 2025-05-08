@@ -1,7 +1,10 @@
 package app
 
 import (
+	"context"
 	"io"
+
+	v110 "github.com/olimdzhon/achilles/app/upgrades/v110"
 
 	_ "cosmossdk.io/api/cosmos/tx/config/v1" // import for side-effects
 	clienthelpers "cosmossdk.io/client/v2/helpers"
@@ -18,6 +21,7 @@ import (
 	_ "cosmossdk.io/x/nft/module" // import for side-effects
 	_ "cosmossdk.io/x/upgrade"    // import for side-effects
 	upgradekeeper "cosmossdk.io/x/upgrade/keeper"
+	upgradetypes "cosmossdk.io/x/upgrade/types"
 	abci "github.com/cometbft/cometbft/abci/types"
 	dbm "github.com/cosmos/cosmos-db"
 	"github.com/cosmos/cosmos-sdk/baseapp"
@@ -296,6 +300,11 @@ func New(
 		return app.App.InitChainer(ctx, req)
 	})
 
+	cfg := module.NewConfigurator(app.appCodec, app.MsgServiceRouter(), app.GRPCQueryRouter())
+	// app.ModuleManager.RegisterServices(cfg)
+
+	app.setupUpgradeHandlers(cfg)
+
 	if err := app.Load(loadLatest); err != nil {
 		return nil, err
 	}
@@ -303,6 +312,35 @@ func New(
 	return app, app.WasmKeeper.InitializePinnedCodes(app.NewUncachedContext(true, tmproto.Header{}))
 
 }
+
+func (app *App) setupUpgradeHandlers(cfg module.Configurator) {
+	app.UpgradeKeeper.SetUpgradeHandler(
+		v110.UpgradeName,
+		func(ctx context.Context, plan upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
+			
+			return app.ModuleManager.RunMigrations(ctx, cfg, fromVM)
+		},
+	)	
+
+	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
+	if err != nil {
+		panic(err)
+	}
+
+	if app.UpgradeKeeper.IsSkipHeight(upgradeInfo.Height) {
+		return
+	}
+
+	if upgradeInfo.Name == v110.UpgradeName {
+		storeUpgrades := storetypes.StoreUpgrades{
+			Added: []string{"wasm"},
+		}
+
+		// configure store loader that checks if version == upgradeHeight and applies store upgrades
+		app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storeUpgrades))
+	}
+}
+
 
 // LegacyAmino returns App's amino codec.
 //
