@@ -301,7 +301,6 @@ func New(
 	})
 
 	cfg := module.NewConfigurator(app.appCodec, app.MsgServiceRouter(), app.GRPCQueryRouter())
-	// app.ModuleManager.RegisterServices(cfg)
 
 	app.setupUpgradeHandlers(cfg)
 
