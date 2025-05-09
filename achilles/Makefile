@@ -97,6 +97,17 @@ install: go.sum
 build:
 	go build $(BUILD_FLAGS) -o $(BUILDDIR)/achillesd ./cmd/achillesd
 
+build-linux:
+	GOOS=linux GOARCH=amd64 go build -mod=readonly $(BUILD_FLAGS) -o $(BUILDDIR)/linux-amd64/achillesd ./cmd/achillesd
+
+build-mac:
+	GOOS=darwin GOARCH=amd64 go build -mod=readonly $(BUILD_FLAGS) -o $(BUILDDIR)/darwin-amd64/achillesd ./cmd/achillesd
+
+build-mac-arm64:
+	GOOS=darwin GOARCH=arm64 go build -mod=readonly $(BUILD_FLAGS) -o $(BUILDDIR)/darwin-arm64/achillesd ./cmd/achillesd
+
+release-all: build-linux build-mac build-mac-arm64
+
 $(BUILDDIR)/:
 	mkdir -p $(BUILDDIR)/
 

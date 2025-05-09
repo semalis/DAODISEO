@@ -1,10 +1,10 @@
 package app
 
 import (
-	"context"
+	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 	"io"
 
-	v100 "github.com/olimdzhon/achilles/app/upgrades/v100"
+	"github.com/olimdzhon/achilles/app/upgrades/v101"
 
 	_ "cosmossdk.io/api/cosmos/tx/config/v1" // import for side-effects
 	clienthelpers "cosmossdk.io/client/v2/helpers"
@@ -314,12 +314,9 @@ func New(
 
 func (app *App) setupUpgradeHandlers(cfg module.Configurator) {
 	app.UpgradeKeeper.SetUpgradeHandler(
-		v100.UpgradeName,
-		func(ctx context.Context, plan upgradetypes.Plan, fromVM module.VersionMap) (module.VersionMap, error) {
-			
-			return app.ModuleManager.RunMigrations(ctx, cfg, fromVM)
-		},
-	)	
+		v101.UpgradeName,
+		v101.CreateUpgradeHandler(app.ModuleManager, cfg),
+	)
 
 	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
 	if err != nil {
@@ -330,16 +327,15 @@ func (app *App) setupUpgradeHandlers(cfg module.Configurator) {
 		return
 	}
 
-	if upgradeInfo.Name == v100.UpgradeName {
+	if upgradeInfo.Name == v101.UpgradeName {
 		storeUpgrades := storetypes.StoreUpgrades{
-			Added: []string{"wasm"},
+			Added: []string{wasmtypes.ModuleName},
 		}
 
 		// configure store loader that checks if version == upgradeHeight and applies store upgrades
 		app.SetStoreLoader(upgradetypes.UpgradeStoreLoader(upgradeInfo.Height, &storeUpgrades))
 	}
 }
-
 
 // LegacyAmino returns App's amino codec.
 //
