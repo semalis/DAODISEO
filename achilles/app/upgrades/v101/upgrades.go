@@ -1,4 +1,4 @@
-package v100
+package v101
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 )
 
-const UpgradeName = "v1.0.0-rc2"
+const UpgradeName = "v1.0.1"
 
 func CreateUpgradeHandler(
 	mm *module.Manager,
