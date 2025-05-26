@@ -1,10 +1,9 @@
 package app
 
 import (
-	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 	"io"
 
-	"github.com/olimdzhon/achilles/app/upgrades/v101"
+	v102 "github.com/olimdzhon/achilles/app/upgrades/v102"
 
 	_ "cosmossdk.io/api/cosmos/tx/config/v1" // import for side-effects
 	clienthelpers "cosmossdk.io/client/v2/helpers"
@@ -314,8 +313,8 @@ func New(
 
 func (app *App) setupUpgradeHandlers(cfg module.Configurator) {
 	app.UpgradeKeeper.SetUpgradeHandler(
-		v101.UpgradeName,
-		v101.CreateUpgradeHandler(app.ModuleManager, cfg),
+		v102.UpgradeName,
+		v102.CreateUpgradeHandler(app.ModuleManager, cfg),
 	)
 
 	upgradeInfo, err := app.UpgradeKeeper.ReadUpgradeInfoFromDisk()
@@ -327,9 +326,9 @@ func (app *App) setupUpgradeHandlers(cfg module.Configurator) {
 		return
 	}
 
-	if upgradeInfo.Name == v101.UpgradeName {
+	if upgradeInfo.Name == v102.UpgradeName {
 		storeUpgrades := storetypes.StoreUpgrades{
-			Added: []string{wasmtypes.ModuleName},
+			// Added: []string{wasmtypes.ModuleName},
 		}
 
 		// configure store loader that checks if version == upgradeHeight and applies store upgrades
