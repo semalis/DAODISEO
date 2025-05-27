@@ -84,6 +84,9 @@ import (
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	"github.com/olimdzhon/achilles/docs"
+
+	govv1 "cosmossdk.io/x/gov/types/v1"
+	paramtypes "cosmossdk.io/x/params/types/proposal"
 )
 
 const (
@@ -259,6 +262,14 @@ func New(
 	); err != nil {
 		panic(err)
 	}
+
+	appCodec := appBuilder.AppCodec()
+	interfaceRegistry := appCodec.InterfaceRegistry()
+
+	interfaceRegistry.RegisterImplementations(
+		(*govv1.Content)(nil),
+		&paramtypes.ParameterChangeProposal{},
+	)
 
 	// add to default baseapp options
 	// enable optimistic execution
