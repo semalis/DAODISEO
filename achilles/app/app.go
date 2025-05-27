@@ -85,8 +85,8 @@ import (
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
 	"github.com/olimdzhon/achilles/docs"
 
-	govv1 "cosmossdk.io/x/gov/types/v1"
-	paramtypes "cosmossdk.io/x/params/types/proposal"
+	govv1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
+	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
 )
 
 const (
