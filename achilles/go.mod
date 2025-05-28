@@ -5,7 +5,9 @@ go 1.23.1
 toolchain go1.23.8
 
 replace (
+	cosmossdk.io/x/params => github.com/cosmos/cosmos-sdk/x/params v0.50.11
 	cosmossdk.io/x/upgrade => github.com/cosmos/cosmos-sdk/x/upgrade v0.1.4
+	github.com/cosmos/cosmos-sdk => github.com/cosmos/cosmos-sdk v0.50.11
 	// fix upstream GHSA-h395-qcrw-5vmq vulnerability.
 	github.com/gin-gonic/gin => github.com/gin-gonic/gin v1.7.0
 	// replace broken goleveldb

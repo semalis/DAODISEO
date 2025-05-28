@@ -1,6 +1,9 @@
 package app
 
 import (
+	govv1beta1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1beta1"
+	paramproposal "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
+
 	"io"
 
 	v102 "github.com/olimdzhon/achilles/app/upgrades/v102"
@@ -83,10 +86,8 @@ import (
 
 	wasmkeeper "github.com/CosmWasm/wasmd/x/wasm/keeper"
 	tmproto "github.com/cometbft/cometbft/proto/tendermint/types"
+	_ "github.com/cosmos/cosmos-sdk/x/params/types/proposal" // фиктивный импорт для GoLand, чтобы сохранить replace
 	"github.com/olimdzhon/achilles/docs"
-
-	govv1 "github.com/cosmos/cosmos-sdk/x/gov/types/v1"
-	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types/proposal"
 )
 
 const (
@@ -199,6 +200,21 @@ func AppConfig() depinject.Config {
 	)
 }
 
+func RegisterLegacyAminoCodec(cdc *codec.LegacyAmino) {
+	govv1beta1.RegisterLegacyAminoCodec(cdc)
+	paramproposal.RegisterLegacyAminoCodec(cdc)
+}
+
+func RegisterInterfaces(registry codectypes.InterfaceRegistry) {
+	govv1beta1.RegisterInterfaces(registry)
+	paramproposal.RegisterInterfaces(registry)
+
+	registry.RegisterImplementations(
+		(*govv1beta1.Content)(nil),
+		&paramproposal.ParameterChangeProposal{},
+	)
+}
+
 // New returns a reference to an initialized App.
 func New(
 	logger log.Logger,
@@ -263,13 +279,8 @@ func New(
 		panic(err)
 	}
 
-	appCodec := appBuilder.AppCodec()
-	interfaceRegistry := appCodec.InterfaceRegistry()
-
-	interfaceRegistry.RegisterImplementations(
-		(*govv1.Content)(nil),
-		&paramtypes.ParameterChangeProposal{},
-	)
+	RegisterLegacyAminoCodec(app.legacyAmino)
+	RegisterInterfaces(app.interfaceRegistry)
 
 	// add to default baseapp options
 	// enable optimistic execution
